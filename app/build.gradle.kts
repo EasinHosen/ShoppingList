@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId = "com.kkeb.shoppinglist"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.room.runtime)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.navigation.compose)
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
