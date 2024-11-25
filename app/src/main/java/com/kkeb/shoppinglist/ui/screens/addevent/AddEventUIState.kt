@@ -4,7 +4,7 @@ import com.kkeb.shoppinglist.data.entities.ShoppingEvent
 data class AddEventDetails(
     val id: Long = 0,
     val name: String = "",
-    val initialBudget: Double = 0.0,
+    val initialBudget: String = "0.0",
     val totalCost: Double = 0.0,
     val eventDate: String = "",
     val completed: Boolean = false,
@@ -18,7 +18,7 @@ data class AddEventUIState(
 fun AddEventDetails.toShoppingEvent() = ShoppingEvent(
     id = id,
     name = name,
-    initialBudget = initialBudget,
+    initialBudget = initialBudget.toDoubleOrNull() ?: 0.0,
     totalCost = totalCost,
     eventDate = eventDate,
     completed = completed,

@@ -6,8 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.kkeb.shoppinglist.data.daos.ShoppingEventDao
 import com.kkeb.shoppinglist.data.daos.ShoppingItemDao
+import com.kkeb.shoppinglist.data.entities.ShoppingEvent
+import com.kkeb.shoppinglist.data.entities.ShoppingItem
 
-@Database(entities = [ShoppingEventDao::class, ShoppingItemDao::class], version = 1)
+@Database(entities = [ShoppingEvent::class, ShoppingItem::class], version = 1)
 abstract class ShoppingDB : RoomDatabase() {
     abstract fun shoppingEventDao(): ShoppingEventDao
     abstract fun shoppingItemDao(): ShoppingItemDao

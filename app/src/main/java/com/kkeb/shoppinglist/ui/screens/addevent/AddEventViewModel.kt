@@ -8,9 +8,9 @@ import com.kkeb.shoppinglist.data.repositories.ShoppingEventRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-//@HiltViewModel
-class AddEventViewModel /*@Inject constructor*/(
-//    private  val shoppingEventRepository: ShoppingEventRepository
+@HiltViewModel
+class AddEventViewModel @Inject constructor(
+    private val shoppingEventRepository: ShoppingEventRepository
 ) : ViewModel() {
     var addEventUIState by mutableStateOf(AddEventUIState())
 
@@ -28,6 +28,6 @@ class AddEventViewModel /*@Inject constructor*/(
     }
 
     suspend fun saveEvent() {
-        //shoppingEventRepository.saveEvent(addEventUIState.eventDetails.toShoppingEvent())
+        shoppingEventRepository.insertShoppingEvent(addEventUIState.eventDetails.toShoppingEvent())
     }
 }

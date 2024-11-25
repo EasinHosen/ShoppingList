@@ -31,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.kkeb.shoppinglist.customui.ShoppingListAppBar
 import com.kkeb.shoppinglist.utils.getFormattedDateTime
 import kotlinx.coroutines.launch
@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 fun AddEventScreen(
     navigateBack: () -> Unit,
     navigateUp: () -> Unit,
-    viewModel: AddEventViewModel = /*hiltViewModel()*/viewModel(),
+    viewModel: AddEventViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -57,7 +57,7 @@ fun AddEventScreen(
             uiState = viewModel.addEventUIState,
             onEventValueChange = { viewModel.updateUIState(it) },
             onSave = {
-                coroutineScope.launch{
+                coroutineScope.launch {
                     viewModel.saveEvent()
                     navigateBack()
                 }
@@ -111,7 +111,9 @@ fun AddEventForm(
         Button(
             onClick = onSave,
             enabled = uiState.isEntryValid,
-            modifier = modifier.padding(horizontal = 8.dp).fillMaxWidth()
+            modifier = modifier
+                .padding(horizontal = 8.dp)
+                .fillMaxWidth()
         ) {
             Text("Save")
         }
@@ -158,7 +160,9 @@ fun TextInputFields(
         OutlinedTextField(
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             value = addEventDetails.initialBudget.toString(),
-            onValueChange = {},
+            onValueChange = {
+                onEventValueChange(addEventDetails.copy(initialBudget = it))
+            },
             label = { Text("Initial Budget(Optional)") },
             modifier = Modifier
                 .padding(8.dp)
