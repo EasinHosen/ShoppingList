@@ -1,9 +1,6 @@
 package com.kkeb.shoppinglist.ui.screens.addevent
 
 import com.kkeb.shoppinglist.data.entities.ShoppingEvent
-import com.kkeb.shoppinglist.utils.stringToDate
-import java.util.Date
-
 data class AddEventDetails(
     val id: Long = 0,
     val name: String = "",
@@ -23,7 +20,7 @@ fun AddEventDetails.toShoppingEvent() = ShoppingEvent(
     name = name,
     initialBudget = initialBudget,
     totalCost = totalCost,
-    eventDate = stringToDate(eventDate) ?: Date(),
+    eventDate = eventDate,
     completed = completed,
 )
 
