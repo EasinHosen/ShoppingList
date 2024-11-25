@@ -1,9 +1,14 @@
 package com.kkeb.shoppinglist.data.entities
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "shopping_items")
 data class ShoppingItem(
-    val id: Long = 0,
-    val eventId: Long,
-    val itemName: String,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @ColumnInfo(name = "event_id") val eventId: Long,
+    @ColumnInfo(name = "item_name") val itemName: String,
     val price: Double = 0.0,
     val quantity: Double = 1.0,
 )
