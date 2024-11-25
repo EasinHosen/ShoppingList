@@ -1,5 +1,6 @@
 package com.kkeb.shoppinglist.ui.screens.addevent
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerState
@@ -23,9 +25,11 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kkeb.shoppinglist.customui.ShoppingListAppBar
 import com.kkeb.shoppinglist.utils.getFormattedDateTime
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddEventScreen(
@@ -41,6 +46,7 @@ fun AddEventScreen(
     viewModel: AddEventViewModel = /*hiltViewModel()*/viewModel(),
     modifier: Modifier = Modifier
 ) {
+    val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
             ShoppingListAppBar(
@@ -53,7 +59,12 @@ fun AddEventScreen(
         AddEventForm(
             uiState = viewModel.addEventUIState,
             onEventValueChange = { viewModel.updateUIState(it) },
-            onSave = { /*TODO*/ },
+            onSave = {
+                coroutineScope.launch{
+                    viewModel.saveEvent()
+                    navigateBack()
+                }
+            },
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -100,6 +111,13 @@ fun AddEventForm(
             },
             onDismiss = { openDatePickerDialog = false }
         )
+        Button(
+            onClick = onSave,
+            enabled = uiState.isEntryValid,
+            modifier = modifier.padding(horizontal = 8.dp).fillMaxWidth()
+        ) {
+            Text("Save")
+        }
     }
 }
 
@@ -186,7 +204,7 @@ fun DatePickerUI(
                 ) {
                     Text("Cancel")
                 }
-            }
+            },
         ) {
             DatePicker(
                 state = state,

@@ -26,4 +26,8 @@ class AddEventViewModel /*@Inject constructor*/(
             name.isNotBlank() && eventDate.isNotBlank()
         }
     }
+
+    suspend fun saveEvent() {
+        //shoppingEventRepository.saveEvent(addEventUIState.eventDetails.toShoppingEvent())
+    }
 }
