@@ -26,6 +26,9 @@ fun ShoppingListApp(modifier: Modifier = Modifier) {
                     navigateToAddEvent = {
                         navController.navigate(route = AddEventRoute)
                     },
+                    navigateToEventDetails = { id, name ->
+                        navController.navigate(route = EventDetailRoute(id, name))
+                    },
                     modifier = modifier
                 )
             }

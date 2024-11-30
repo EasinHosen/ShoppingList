@@ -4,6 +4,7 @@ import android.view.RoundedCorner
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,8 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemColors
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -46,6 +49,7 @@ import com.kkeb.shoppinglist.data.entities.ShoppingEvent
 fun HomeScreen(
     navigateToAddEvent: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
+    navigateToEventDetails: (Long, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.homeUIState.collectAsState()
@@ -77,13 +81,15 @@ fun HomeScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize(),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(uiState.shoppingEventList.size) { index ->
                         val event = uiState.shoppingEventList[index]
                         EventCard(
                             event = event,
-                            onItemClick = {},
+                            onItemClick = { id, name ->
+                                navigateToEventDetails(id, name)
+                            },
                             modifier = modifier
                         )
                     }
@@ -108,7 +114,7 @@ fun NoDataFound(modifier: Modifier = Modifier) {
 fun EventCard(
     event: ShoppingEvent,
     modifier: Modifier = Modifier,
-    onItemClick: () -> Unit
+    onItemClick: (Long, String) -> Unit
 ) {
     /*Surface(
         modifier = modifier
@@ -137,6 +143,13 @@ fun EventCard(
         }
     }*/
     ListItem(
+        modifier = modifier.clickable {
+            onItemClick(event.id, event.name)
+        },
+        shadowElevation = 2.dp,
+        colors = ListItemDefaults.colors(
+            containerColor = Color.White,
+        ),
         leadingContent = {
             IconButton(
                 onClick = {}
@@ -150,7 +163,7 @@ fun EventCard(
         headlineContent = {
             Text(
                 text = event.name,
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -158,7 +171,7 @@ fun EventCard(
         supportingContent = {
             Text(
                 text = event.eventDate,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -166,7 +179,7 @@ fun EventCard(
         trailingContent = {
             Text(
                 text = event.totalCost.toString(),
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -175,7 +188,7 @@ fun EventCard(
 
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 private fun EventCardPrev() {
     EventCard(
@@ -187,9 +200,11 @@ private fun EventCardPrev() {
             eventDate = "Fri, 10 Dec 2021",
             completed = false
         ),
-        onItemClick = {}
+        onItemClick = {
+            1, "Event 1" ->
+        }
 
-        )
-}
+    )
+}*/
 
 
