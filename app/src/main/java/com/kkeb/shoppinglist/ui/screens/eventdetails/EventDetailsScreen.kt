@@ -1,6 +1,10 @@
 package com.kkeb.shoppinglist.ui.screens.eventdetails
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kkeb.shoppinglist.customui.ShoppingListAppBar
+import kotlinx.coroutines.launch
 
 @Composable
 fun EventDetailsScreen(
@@ -28,6 +33,18 @@ fun EventDetailsScreen(
                 hasBack = true,
                 navigateUp = navigateUp
             )
+        },
+        floatingActionButton ={
+            ExtendedFloatingActionButton(
+                onClick = {
+                    coroutineScope.launch {
+                        viewModel.addItem()
+                    }
+                }
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Add Item")
+                Text("Add Item")
+            }
         }
     ) { innerPadding ->
         Text(

@@ -2,6 +2,7 @@ package com.kkeb.shoppinglist.data.repositories
 
 import com.kkeb.shoppinglist.data.daos.ShoppingEventDao
 import com.kkeb.shoppinglist.data.entities.ShoppingEvent
+import com.kkeb.shoppinglist.data.entities.ShoppingItem
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -13,6 +14,9 @@ interface ShoppingEventRepository {
     suspend fun deleteShoppingEvent(shoppingEvent: ShoppingEvent)
 
     fun getAllShoppingEvents(): Flow<List<ShoppingEvent>>
+
+    fun getShoppingEventWithItems(id: Long): Flow<Map<ShoppingEvent, List<ShoppingItem>>>
+
 }
 
 
@@ -32,6 +36,9 @@ class ShoppingEventRepositoryImpl @Inject constructor(
 
 
     override fun getAllShoppingEvents(): Flow<List<ShoppingEvent>> =
-         shoppingEventDao.getAllShoppingEvents()
+        shoppingEventDao.getAllShoppingEvents()
+
+    override fun getShoppingEventWithItems(id: Long): Flow<Map<ShoppingEvent, List<ShoppingItem>>> =
+        shoppingEventDao.getShoppingEventWithItems(id)
 
 }

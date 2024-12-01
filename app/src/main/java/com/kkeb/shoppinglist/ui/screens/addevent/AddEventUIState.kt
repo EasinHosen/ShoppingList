@@ -24,3 +24,11 @@ fun AddEventDetails.toShoppingEvent() = ShoppingEvent(
     completed = completed,
 )
 
+fun ShoppingEvent.toAddEventDetails() = AddEventDetails(
+    id = id,
+    name = name,
+    initialBudget = initialBudget.toString(),
+    totalCost = totalCost,
+    eventDate = eventDate,
+    completed = completed,
+)

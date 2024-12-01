@@ -1,5 +1,6 @@
 package com.kkeb.shoppinglist.ui.screens.eventdetails
 
+import com.kkeb.shoppinglist.data.entities.ShoppingItem
 import com.kkeb.shoppinglist.ui.screens.addevent.AddEventDetails
 
 data class ItemDetails(
@@ -16,6 +17,14 @@ data class ItemUIState(
 )
 
 data class EventDetailsUIState(
-    val eventDetails: AddEventDetails = AddEventDetails(),
+    val eventDetails: AddEventDetails? = AddEventDetails(),
     val itemList: List<ItemDetails> = emptyList(),
 )
+
+fun ShoppingItem.toItemDetails(): ItemDetails = ItemDetails(
+    id = id,
+    eventId = eventId,
+    itemName = itemName,
+    price = price.toString(),
+    quantity = quantity.toString(),
+    )
